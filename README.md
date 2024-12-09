@@ -16,6 +16,10 @@ To this end, the Meituan team's proposal is to convert images into text and then
 | **장요탁**       | - PPT Creation and Presentation Script <br> - Frontend Code                                                                            | **5%**            |
 
 
+PS. The contribution percentages for this project were evaluated by the team leader (**진수림**) based on actual participation. In this project, **진수림** made the greatest contributions, with **수림봉** providing substantial assistance. The other two team members had minimal involvement in the project development, making only minor adjustments to the layout of a single screen in the frontend.
+Additionally, the PPT and presentation drafts created by the other two members were of low quality, with logical inconsistencies, incomplete content, and numerous AI-generated sections. These required secondary revisions by the team leader and **수림봉** before they could be finalized for submission.
+This assessment is based solely on the team leader's perspective. If there are any concerns regarding the contribution evaluation, please contact the team leader for further clarification.
+
 ---
 
 ## 📚 Features

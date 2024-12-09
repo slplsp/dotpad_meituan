@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DotPad Device Interaction</title>
+    <link rel="icon" href="data:,">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .spacing { margin-bottom: 47px; }
@@ -17,14 +18,14 @@
 <body class="bg-light d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="container mt-5">
         <header>
-            <h2 class="text-center mb-4">生成结果</h2>
+            <h2 class="text-center mb-4">결과 생성</h2>
         </header>
 
         <div class="text-center mb-4">
             {% if sentence %}
                 <p class="text-success font-weight-bold">{{ sentence }}</p>
             {% else %}
-                <p class="text-danger">没有找到对应的句子。</p>
+                <p class="text-danger">해당 문구를 찾을 수 없습니다.</p>
             {% endif %}
         </div>
 
@@ -49,12 +50,12 @@
 
         <!-- Bluetooth Buttons -->
         <div class="text-center mt-5">
-            <h3>蓝牙连接功能</h3>
-            <p id="statusMessage" class="status-message">Use the buttons below to connect, send data, or disconnect from the DotPad device.</p>
+            <h3>블루투스</h3>
+            <p id="statusMessage" class="status-message">아래 버튼을 사용하여 DotPad 장치에 연결, 데이터 전송 또는 연결 해제할 수 있습니다.</p>
             <div>
-                <button class="btn btn-success h_button" id="connectbutton">连接</button>
-                <button class="btn btn-danger h_button" id="disconnectbutton" disabled>断开连接</button>
-                <button class="btn btn-info h_button" id="sendbutton">发送数据</button>
+                <button class="btn btn-success h_button" id="connectbutton">연결해</button>
+                <button class="btn btn-danger h_button" id="disconnectbutton" disabled>연결 끊기</button>
+                <button class="btn btn-info h_button" id="sendbutton">데이터 보내기</button>
             </div>
         </div>
     </div>
@@ -94,15 +95,15 @@
         connectButton.addEventListener("click", async () => {
             try {
                 console.log("Attempting to connect to DotPad...");
-                updateStatusMessage("正在连接 DotPad...");
+                updateStatusMessage("DotPad 연결 중. ..");
                 await myDotPad.connect();
                 console.log("Successfully connected to DotPad.");
-                updateStatusMessage("成功连接到 DotPad.");
+                updateStatusMessage("DotPad에 성공적으로 연결되었습니다.");
                 connectButton.disabled = true;
                 disconnectButton.disabled = false;
             } catch (error) {
                 console.error("Failed to connect to DotPad:", error);
-                updateStatusMessage("连接到 DotPad 失败.", true);
+                updateStatusMessage("DotPad에 연결할 수 없습니다.", true);
             }
         });
 
@@ -110,15 +111,15 @@
         disconnectButton.addEventListener("click", async () => {
             try {
                 console.log("Disconnecting from DotPad...");
-                updateStatusMessage("正在断开连接 DotPad...");
+                updateStatusMessage("DotPad 연결 끊는 중. ..");
                 await myDotPad.disconnect();
                 console.log("Successfully disconnected from DotPad.");
-                updateStatusMessage("成功断开连接 DotPad.");
+                updateStatusMessage("연결 끊김 DotPad.");
                 connectButton.disabled = false;
                 disconnectButton.disabled = true;
             } catch (error) {
                 console.error("Failed to disconnect from DotPad:", error);
-                updateStatusMessage("断开连接 DotPad 失败.", true);
+                updateStatusMessage("DotPad의 연결을 끊는 데 실패했습니다.", true);
             }
         });
 
@@ -126,13 +127,13 @@
         sendButton.addEventListener("click", async () => {
             try {
                 console.log("Sending data to DotPad...");
-                updateStatusMessage("正在发送数据到 DotPad...");
+                updateStatusMessage("DotPad로 데이터 보내는 중. ..");
                 await onS4ButtonClick();
                 console.log("Data sent successfully.");
-                updateStatusMessage("数据发送成功.");
+                updateStatusMessage("데이터가 성공적으로 전송되었습니다.");
             } catch (error) {
                 console.error("Failed to send data:", error);
-                updateStatusMessage("发送数据失败.", true);
+                updateStatusMessage("데이터 전송 실패.", true);
             }
         });
     </script>

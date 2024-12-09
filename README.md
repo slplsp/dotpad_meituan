@@ -10,7 +10,7 @@ To this end, the Meituan team's proposal is to convert images into text and then
 
 | Member        | Contributions                                                                                                                  | Percentage        |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------|-------------------|
-| **진수림**       | - Web Development <br> - Frontend Code <br> - Backend Code <br> - Frontend-Backend Integration <br> - Text-to-Speech Feature <br> - Text Generation Model <br> - Final PPT Revision                                   | **50%**           |
+| **진수림**       | - Web Development <br> - Frontend Code <br> - Backend Code <br> - Frontend-Backend Integration <br> - Text-to-Speech Feature <br> - Text Generation Model <br> - Final PPT Revision    <br> - DotPad Display Functionality                               | **50%**           |
 | **수림봉**       | - Image Display <br> - Image Recognition Model <br> - DotPad Display Functionality <br> - DotPad Integration (Frontend-Backend Link) <br> - Final Presentation Script Revision <br> -report                                     | **40%**           |
 | **양신뢰**       | - PPT Creation and Presentation Script <br> - Frontend Code                                                                            | **5%**            |
 | **장요탁**       | - PPT Creation and Presentation Script <br> - Frontend Code                                                                            | **5%**            |

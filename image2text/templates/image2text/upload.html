@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>이미지 업로드 및 텍스트</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .spacing { margin-bottom: 47px; }
+        .custom-margin { margin-bottom: 30px; }
+        .image-preview { width: 100%; max-width: 300px; height: auto; }  /* 控制图片显示尺寸 */
+    </style>
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+
+    <div class="container mt-5">
+        <div class="text-center mb-4">
+            <h2>이미지 업로드 및 텍스트 생성</h2>
+            <p class="text-muted spacing">이미지를 업로드하면 시스템에서 자동으로 설명 텍스트를 생성하고 에지 감지 이미지을 표시합니다.</p>
+        </div>
+
+        <!-- 上传表单卡片 -->
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <!-- 文件上传表单 -->
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- 上传新图片 -->
+                    <div class="form-group custom-margin">
+                        <label for="image">이미지 파일 선택</label>
+                        <input type="file" name="image" id="file-upload" class="form-control">
+                    </div>
+
+                    <!-- 已上传图片选择框 -->
+                    <div class="form-group custom-margin">
+                        <label for="selected_image">업로드한 그림을 선택하십시오:</label>
+                        <select name="selected_image" id="selected-image" class="form-control">
+                            <option value="">-- 업로드한 그림 선택 --</option>
+                            {% for image in uploaded_images %}
+                                <option value="{{ image.id }}">{{ image.image.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-block">업로드하여 텍스트 생성</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 添加删除图片的链接 -->
+        <div class="text-center mt-4">
+            <a href="{% url 'delete_images' %}" class="btn btn-warning">업로드한 그림 관리 및 삭제</a>
+        </div>
+
+        <!-- 以下内容仅在生成结果后才会显示 -->
+        {% if sentence or original_image or edges_image or edge_image %}
+            <div class="text-center mt-5">
+                {% if sentence %}
+                    <h4 class="mb-4">생성된 결과:</h4>
+                    <p class="text-success font-weight-bold">{{ sentence }}</p>
+                {% endif %}
+            </div>
+
+            <div class="row text-center mt-4">
+                <div class="col-md-4">
+                    {% if original_image %}
+                        <h5>원본 이미지</h5>
+                        <img src="data:image/png;base64,{{ original_image }}" alt="Original Image" class="image-preview">
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    {% if edges_image %}
+                        <h5>에지 감지 이미지</h5>
+                        <img src="data:image/png;base64,{{ edges_image }}" alt="Edge Detection" class="image-preview">
+                    {% endif %}
+                </div>
+                <div class="col-md-4">
+                    {% if edge_image %}
+                        <h5>40x60 픽셀 그림</h5>
+                        <img src="data:image/png;base64,{{ edge_image }}" alt="40x60 Edge Detection" class="image-preview">
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf</title>
+    <script type="module" src="{{ url_for('static', filename='DotPad_CSUNdemo_chart2.js') }}"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Dot Code</h1>
+        <div class="header-right">
+            <button class="h_button" id="s4">Send</button>
+        </div>
+        <div class="header-right">
+            <button class="h_button" id="connectbutton">Connect</button>
+            <button class="h_button" id="disconnectbutton" disabled>Disconnect</button>
+        </div>
+    </header>
+    <main>
+        <p id="statusMessage">Use the buttons above to connect, send data, or disconnect from the DotPad device.</p>
+    </main>
+
+    <!-- 添加事件绑定的内联脚本 -->
+    <script>
+        const statusMessage = document.getElementById("statusMessage");
+
+        // 更新状态消息
+        const updateStatusMessage = (message, isError = false) => {
+            statusMessage.textContent = message;
+            statusMessage.style.color = isError ? "red" : "green";
+        };
+
+        // 按钮引用
+        const connectButton = document.getElementById("connectbutton");
+        const disconnectButton = document.getElementById("disconnectbutton");
+        const sendButton = document.getElementById("s4");
+
+        // 连接设备
+        connectButton.addEventListener("click", async () => {
+            try {
+                console.log("Attempting to connect to DotPad...");
+                updateStatusMessage("Connecting to DotPad...");
+                await myDotPad.connect();
+                console.log("Successfully connected to DotPad.");
+                updateStatusMessage("Successfully connected to DotPad.");
+                connectButton.disabled = true;
+                disconnectButton.disabled = false;
+            } catch (error) {
+                console.error("Failed to connect to DotPad:", error);
+                updateStatusMessage("Failed to connect to DotPad.", true);
+            }
+        });
+
+        // 断开设备
+        disconnectButton.addEventListener("click", async () => {
+            try {
+                console.log("Disconnecting from DotPad...");
+                updateStatusMessage("Disconnecting from DotPad...");
+                await myDotPad.disconnect();
+                console.log("Successfully disconnected from DotPad.");
+                updateStatusMessage("Successfully disconnected from DotPad.");
+                connectButton.disabled = false;
+                disconnectButton.disabled = true;
+            } catch (error) {
+                console.error("Failed to disconnect from DotPad:", error);
+                updateStatusMessage("Failed to disconnect from DotPad.", true);
+            }
+        });
+
+        // 发送数据
+        sendButton.addEventListener("click", async () => {
+            try {
+                console.log("Sending data to DotPad...");
+                updateStatusMessage("Sending data to DotPad...");
+                await onS4ButtonClick(); // 调用 JavaScript 文件中的发送函数
+                console.log("Data sent successfully.");
+                updateStatusMessage("Data sent successfully.");
+            } catch (error) {
+                console.error("Failed to send data:", error);
+                updateStatusMessage("Failed to send data.", true);
+            }
+        });
+    </script>
+</body>
+</html>

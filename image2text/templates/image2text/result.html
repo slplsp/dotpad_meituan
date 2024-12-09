@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DotPad Device Interaction</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .spacing { margin-bottom: 47px; }
+        .image-preview { width: 100%; max-width: 300px; height: auto; }
+        .status-message { font-weight: bold; }
+        .h_button { margin: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+    {% load static %}
+    <script type="module" src="{% static 'DotPad_CSUNdemo_chart2.js' %}"></script>
+</head>
+<body class="bg-light d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <div class="container mt-5">
+        <header>
+            <h2 class="text-center mb-4">生成结果</h2>
+        </header>
+
+        <div class="text-center mb-4">
+            {% if sentence %}
+                <p class="text-success font-weight-bold">{{ sentence }}</p>
+            {% else %}
+                <p class="text-danger">没有找到对应的句子。</p>
+            {% endif %}
+        </div>
+
+        <div class="row text-center">
+            <div class="col-md-4">
+                <h5>잘라낸 이미지</h5>
+                <img src="data:image/png;base64,{{ original_image }}" alt="Original Image" class="image-preview">
+            </div>
+            <div class="col-md-4">
+                <h5>에지 감지 이미지</h5>
+                <img src="data:image/png;base64,{{ edges_image }}" alt="Edge Detection" class="image-preview">
+            </div>
+            <div class="col-md-4">
+                <h5>40x60 dotpad 그림</h5>
+                <img src="data:image/png;base64,{{ edge_image }}" alt="40x60 Edge Detection" class="image-preview">
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="{% url 'image_to_text_view' %}" class="btn btn-primary">업로드한 그림 페이지로 돌아가기</a>
+        </div>
+
+        <!-- Bluetooth Buttons -->
+        <div class="text-center mt-5">
+            <h3>蓝牙连接功能</h3>
+            <p id="statusMessage" class="status-message">Use the buttons below to connect, send data, or disconnect from the DotPad device.</p>
+            <div>
+                <button class="btn btn-success h_button" id="connectbutton">连接</button>
+                <button class="btn btn-danger h_button" id="disconnectbutton" disabled>断开连接</button>
+                <button class="btn btn-info h_button" id="sendbutton">发送数据</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const statusMessage = document.getElementById("statusMessage");
+
+        // 更新状态消息
+        const updateStatusMessage = (message, isError = false) => {
+            statusMessage.textContent = message;
+            statusMessage.style.color = isError ? "red" : "green";
+        };
+
+        // 按钮引用
+        const connectButton = document.getElementById("connectbutton");
+        const disconnectButton = document.getElementById("disconnectbutton");
+        const sendButton = document.getElementById("sendbutton");
+
+        // 模拟 DotPad 操作对象
+        const myDotPad = {
+            connect: async () => {
+                // 模拟连接逻辑
+                return new Promise((resolve) => setTimeout(resolve, 1000));
+            },
+            disconnect: async () => {
+                // 模拟断开逻辑
+                return new Promise((resolve) => setTimeout(resolve, 1000));
+            },
+        };
+
+        const onS4ButtonClick = async () => {
+            // 模拟发送数据逻辑
+            return new Promise((resolve) => setTimeout(resolve, 1000));
+        };
+
+        // 连接设备
+        connectButton.addEventListener("click", async () => {
+            try {
+                console.log("Attempting to connect to DotPad...");
+                updateStatusMessage("正在连接 DotPad...");
+                await myDotPad.connect();
+                console.log("Successfully connected to DotPad.");
+                updateStatusMessage("成功连接到 DotPad.");
+                connectButton.disabled = true;
+                disconnectButton.disabled = false;
+            } catch (error) {
+                console.error("Failed to connect to DotPad:", error);
+                updateStatusMessage("连接到 DotPad 失败.", true);
+            }
+        });
+
+        // 断开设备
+        disconnectButton.addEventListener("click", async () => {
+            try {
+                console.log("Disconnecting from DotPad...");
+                updateStatusMessage("正在断开连接 DotPad...");
+                await myDotPad.disconnect();
+                console.log("Successfully disconnected from DotPad.");
+                updateStatusMessage("成功断开连接 DotPad.");
+                connectButton.disabled = false;
+                disconnectButton.disabled = true;
+            } catch (error) {
+                console.error("Failed to disconnect from DotPad:", error);
+                updateStatusMessage("断开连接 DotPad 失败.", true);
+            }
+        });
+
+        // 发送数据
+        sendButton.addEventListener("click", async () => {
+            try {
+                console.log("Sending data to DotPad...");
+                updateStatusMessage("正在发送数据到 DotPad...");
+                await onS4ButtonClick();
+                console.log("Data sent successfully.");
+                updateStatusMessage("数据发送成功.");
+            } catch (error) {
+                console.error("Failed to send data:", error);
+                updateStatusMessage("发送数据失败.", true);
+            }
+        });
+    </script>
+</body>
+</html>

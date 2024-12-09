@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>홈페이지 - 이미지 업로드 및 텍스트 생성</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+        .content {
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            margin-bottom: 40px;
+            font-size: 32px;
+        }
+        p {
+            margin-bottom: 40px;
+            font-size: 20px;
+            line-height: 1.6;
+            text-align: justify;
+            text-align-last: center;
+        }
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 20px;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            outline: none;
+            cursor: pointer;
+        }
+        .btn:hover, .btn:focus {
+            background-color: #0056b3;
+        }
+        .btn:focus {
+            outline: 3px solid #ffcc00;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content" role="main" aria-labelledby="main-heading" aria-describedby="description">
+        <h1 id="main-heading">홈페이지</h1>
+        <p id="description">안녕하십니까！이미지 업로드 페이지에 액세스하려면 아래 버튼을 클릭하십시오</p>
+        <a href="{% url 'image_to_text_view' %}" id="start-button" class="btn" aria-label="이미지 업로드 페이지로 이동하여 텍스트 생성 시작">텍스트 생성 시작하기</a>
+    </div>
+
+</body>
+</html>

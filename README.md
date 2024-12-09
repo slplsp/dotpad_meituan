@@ -32,3 +32,16 @@ This assessment is based solely on the team leader's perspective. If there are a
 
 ---
 
+
+## 🚀 How to Run
+1. 
+   ```bash
+   git clone https://github.com/slplsp/dotpad_meituan.git
+   cd dotpad_meituan
+   
+---
+## 📞 Contact
+If you have any questions, please contact suilinpeng15@gmail.com or sl695969@outlook.com。
+
+
+

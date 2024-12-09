@@ -11,6 +11,20 @@
         .image-preview { width: 100%; max-width: 300px; height: auto; }
         .status-message { font-weight: bold; }
         .h_button { margin: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+        /* 样式调整以突出播放按钮 */
+        .speak-button {
+            margin-left: 10px;
+            padding: 5px 10px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #6c757d;
+            border: none;
+            color: white;
+            border-radius: 4px;
+        }
+        .speak-button:hover {
+            background-color: #5a6268;
+        }
     </style>
     {% load static %}
     <script type="module" src="{% static 'DotPad_CSUNdemo_chart2.js' %}"></script>
@@ -23,7 +37,9 @@
 
         <div class="text-center mb-4">
             {% if sentence %}
-                <p class="text-success font-weight-bold">{{ sentence }}</p>
+                <p class="text-success font-weight-bold d-inline" id="generated-sentence">{{ sentence }}</p>
+                <!-- 播放按钮 -->
+                <button class="speak-button" id="speak-button" title="播放语音">🔊</button>
             {% else %}
                 <p class="text-danger">해당 문구를 찾을 수 없습니다.</p>
             {% endif %}
@@ -60,81 +76,120 @@
         </div>
     </div>
 
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- 语音播报脚本 -->
     <script>
-        const statusMessage = document.getElementById("statusMessage");
+        document.addEventListener("DOMContentLoaded", function() {
+            const sentenceElement = document.getElementById("generated-sentence");
+            const speakButton = document.getElementById("speak-button");
 
-        // 更新状态消息
-        const updateStatusMessage = (message, isError = false) => {
-            statusMessage.textContent = message;
-            statusMessage.style.color = isError ? "red" : "green";
-        };
+            // 定义播放语音的函数
+            function playSpeech(text) {
+                if ('speechSynthesis' in window) {
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    utterance.lang = 'en-US'; // 设置为英语（美国）
+                    // 可选：设置语音属性，例如音调、语速等
+                    utterance.pitch = 1;
+                    utterance.rate = 1;
+                    speechSynthesis.speak(utterance);
+                } else {
+                    alert("抱歉，您的浏览器不支持语音播报功能。");
+                }
+            }
 
-        // 按钮引用
-        const connectButton = document.getElementById("connectbutton");
-        const disconnectButton = document.getElementById("disconnectbutton");
-        const sendButton = document.getElementById("sendbutton");
+            if (sentenceElement) {
+                const text = sentenceElement.textContent;
 
-        // 模拟 DotPad 操作对象
-        const myDotPad = {
-            connect: async () => {
-                // 模拟连接逻辑
+                // 尝试自动播放语音
+                playSpeech(text);
+
+                // 添加播放按钮的事件监听器，作为自动播放失败时的备选
+                if (speakButton) {
+                    speakButton.addEventListener("click", () => {
+                        playSpeech(text);
+                    });
+                }
+            }
+
+            // Bluetooth Buttons 脚本保持不变
+            const statusMessage = document.getElementById("statusMessage");
+
+            // 更新状态消息
+            const updateStatusMessage = (message, isError = false) => {
+                statusMessage.textContent = message;
+                statusMessage.style.color = isError ? "red" : "green";
+            };
+
+            // 按钮引用
+            const connectButton = document.getElementById("connectbutton");
+            const disconnectButton = document.getElementById("disconnectbutton");
+            const sendButton = document.getElementById("sendbutton");
+
+            // 模拟 DotPad 操作对象
+            const myDotPad = {
+                connect: async () => {
+                    // 模拟连接逻辑
+                    return new Promise((resolve) => setTimeout(resolve, 1000));
+                },
+                disconnect: async () => {
+                    // 模拟断开逻辑
+                    return new Promise((resolve) => setTimeout(resolve, 1000));
+                },
+            };
+
+            const onS4ButtonClick = async () => {
+                // 模拟发送数据逻辑
                 return new Promise((resolve) => setTimeout(resolve, 1000));
-            },
-            disconnect: async () => {
-                // 模拟断开逻辑
-                return new Promise((resolve) => setTimeout(resolve, 1000));
-            },
-        };
+            };
 
-        const onS4ButtonClick = async () => {
-            // 模拟发送数据逻辑
-            return new Promise((resolve) => setTimeout(resolve, 1000));
-        };
+            // 连接设备
+            connectButton.addEventListener("click", async () => {
+                try {
+                    console.log("Attempting to connect to DotPad...");
+                    updateStatusMessage("DotPad 연결 중. ..");
+                    await myDotPad.connect();
+                    console.log("Successfully connected to DotPad.");
+                    updateStatusMessage("DotPad에 성공적으로 연결되었습니다.");
+                    connectButton.disabled = true;
+                    disconnectButton.disabled = false;
+                } catch (error) {
+                    console.error("Failed to connect to DotPad:", error);
+                    updateStatusMessage("DotPad에 연결할 수 없습니다.", true);
+                }
+            });
 
-        // 连接设备
-        connectButton.addEventListener("click", async () => {
-            try {
-                console.log("Attempting to connect to DotPad...");
-                updateStatusMessage("DotPad 연결 중. ..");
-                await myDotPad.connect();
-                console.log("Successfully connected to DotPad.");
-                updateStatusMessage("DotPad에 성공적으로 연결되었습니다.");
-                connectButton.disabled = true;
-                disconnectButton.disabled = false;
-            } catch (error) {
-                console.error("Failed to connect to DotPad:", error);
-                updateStatusMessage("DotPad에 연결할 수 없습니다.", true);
-            }
-        });
+            // 断开设备
+            disconnectButton.addEventListener("click", async () => {
+                try {
+                    console.log("Disconnecting from DotPad...");
+                    updateStatusMessage("DotPad 연결 끊는 중. ..");
+                    await myDotPad.disconnect();
+                    console.log("Successfully disconnected from DotPad.");
+                    updateStatusMessage("연결 끊김 DotPad.");
+                    connectButton.disabled = false;
+                    disconnectButton.disabled = true;
+                } catch (error) {
+                    console.error("Failed to disconnect from DotPad:", error);
+                    updateStatusMessage("DotPad의 연결을 끊는 데 실패했습니다.", true);
+                }
+            });
 
-        // 断开设备
-        disconnectButton.addEventListener("click", async () => {
-            try {
-                console.log("Disconnecting from DotPad...");
-                updateStatusMessage("DotPad 연결 끊는 중. ..");
-                await myDotPad.disconnect();
-                console.log("Successfully disconnected from DotPad.");
-                updateStatusMessage("연결 끊김 DotPad.");
-                connectButton.disabled = false;
-                disconnectButton.disabled = true;
-            } catch (error) {
-                console.error("Failed to disconnect from DotPad:", error);
-                updateStatusMessage("DotPad의 연결을 끊는 데 실패했습니다.", true);
-            }
-        });
-
-        // 发送数据
-        sendButton.addEventListener("click", async () => {
-            try {
-                console.log("Sending data to DotPad...");
-                updateStatusMessage("DotPad로 데이터 보내는 중. ..");
-                await onS4ButtonClick();
-                console.log("Data sent successfully.");
-                updateStatusMessage("데이터가 성공적으로 전송되었습니다.");
-            } catch (error) {
-                console.error("Failed to send data:", error);
-                updateStatusMessage("데이터 전송 실패.", true);
-            }
+            // 发送数据
+            sendButton.addEventListener("click", async () => {
+                try {
+                    console.log("Sending data to DotPad...");
+                    updateStatusMessage("DotPad로 데이터 보내는 중. ..");
+                    await onS4ButtonClick();
+                    console.log("Data sent successfully.");
+                    updateStatusMessage("데이터가 성공적으로 전송되었습니다.");
+                } catch (error) {
+                    console.error("Failed to send data:", error);
+                    updateStatusMessage("데이터 전송 실패.", true);
+                }
+            });
         });
     </script>
 </body>

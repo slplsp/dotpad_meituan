@@ -34,11 +34,18 @@ This assessment is based solely on the team leader's perspective. If there are a
 
 
 ## 🚀 How to Run
-1. 
-   ```bash
-   git clone https://github.com/slplsp/dotpad_meituan.git
-   cd dotpad_meituan
-   python manage.py runserver
+
+### Step 1: Download the Model Files
+You need to download the required model files from the following link:
+[Google Drive - Model Files](https://drive.google.com/drive/folders/1ZyE13mffdJcaNbRVeaDR_xg42sDUG-MU?usp=sharing)
+
+### Step 2: Clone the Repository and Start the Server
+Run the following commands in your terminal:
+```bash
+git clone https://github.com/slplsp/dotpad_meituan.git
+cd dotpad_meituan
+python manage.py runserver
+
    
 ---
 ## 📞 Contact

@@ -1,3 +1,0 @@
-cd "폴더가 있는 경로"
-pip install -r requirements.txt
-python server.py

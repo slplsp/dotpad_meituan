@@ -38,6 +38,7 @@ This assessment is based solely on the team leader's perspective. If there are a
    ```bash
    git clone https://github.com/slplsp/dotpad_meituan.git
    cd dotpad_meituan
+   python manage.py runserver
    
 ---
 ## 📞 Contact

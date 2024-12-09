@@ -53,8 +53,8 @@ python manage.py runserver
 ## 📞 Contact
 
 If you have any questions, feel free to reach out via email:  
-- [suilinpeng15@gmail.com](mailto:suilinpeng15@gmail.com)  
-- [sl695969@outlook.com](mailto:sl695969@outlook.com)
+- suilinpeng15@gmail.com
+- sl695969@outlook.com
 
 
 

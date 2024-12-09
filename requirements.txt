@@ -6,7 +6,7 @@ async-timeout==4.0.3
 attrs==24.2.0
 backports.zoneinfo==0.2.1
 blinker==1.8.2
-certifi @ file:///C:/b/abs_85o_6fm0se/croot/certifi_1671487778835/work/certifi
+certifi
 charset-normalizer==3.4.0
 click==8.1.7
 colorama==0.4.6

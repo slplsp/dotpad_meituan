@@ -6,6 +6,29 @@ To this end, the Meituan team's proposal is to convert images into text and then
 
 ---
 
+## Technical Libraries
+
+### 1. Image Recognition
+- **YOLOv8 Model**: Used for image detection.  
+- **OpenCV**: Crops the object regions detected by YOLO, performs scaling, contrast enhancement, edge detection, and final image processing on grayscale images.  
+- **NumPy**: Calculates the area of each test box and maps the image detection information onto a graphical background.  
+
+Using the above technologies, the system integrates the processes to display the cropped image, grayscale image, and edge-detected image on a webpage. On the backend, it generates an array for transmission to the `dotpad` for visualization.
+
+### 2. Text Generation
+- **Encoder**: Utilizes ResNet101.  
+- **Decoder**: Uses an attention-based RNN decoder.  
+- **Dataset**: The model is trained on the COCO2014 dataset to generate a text generation model.
+
+### 3. Web Development
+- **Django**:
+  - **Model**: Interacts with the database, defines data structures, and handles storage logic.  
+  - **View**: Processes business logic, connects models and templates, and manages data transfer and processing.  
+  - **Template**: Renders the user interface and displays data on HTML pages.  
+  - **Controller**: Implements routing through `urls.py`, assigning requests to the appropriate view functions.  
+
+The system processes the original image through the image detection model, generates corresponding text based on the processed image, and uses Google Chrome's built-in read-aloud functionality to read the text. Additionally, it provides a button to send the image to the `dotpad` for further display.
+
 ## 🛠️ Team Contributions
 
 | Member        | Contributions                                                                                                                  | Percentage        |

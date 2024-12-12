@@ -34,7 +34,7 @@ The system processes the original image through the image detection model, gener
 | Member        | Contributions                                                                                                                  | Percentage        |
 |---------------|-------------------------------------------------------------------------------------------------------------------------------|-------------------|
 | **진수림**       | - Web Development <br> - Frontend Code <br> - Backend Code <br> - Frontend-Backend Integration <br> - Text-to-Speech Feature <br> - Text Generation Model <br> - Final PPT Revision    <br> - DotPad Display Functionality                               | **50%**           |
-| **수림봉**       | - Image Display <br> - Image Recognition Model <br> - DotPad Display Functionality <br> - DotPad Integration (Frontend-Backend Link) <br> - Final Presentation Script Revision <br> - Technical Documentation Writing <br> - Report Writing                                    | **40%**           |
+| **수림봉**       | - Image Display <br> - Image Recognition Model <br> - Text Generation Model <br> - DotPad Display Functionality <br> - DotPad Integration (Frontend-Backend Link) <br> - Final Presentation Script Revision <br> - Technical Documentation Writing <br> - Report Writing                                    | **40%**           |
 | **양신뢰**       | - PPT Creation and Presentation Script <br> - Frontend Code                                                                            | **5%**            |
 | **장요탁**       | - PPT Creation and Presentation Script <br> - Frontend Code                                                                            | **5%**            |
 
